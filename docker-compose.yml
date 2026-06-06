@@ -1,0 +1,35 @@
+name: vg-hub
+
+services:
+  nginx:
+    container_name: nginx
+    build: .
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - portfolio_dist:/usr/share/nginx/html/portfolio:ro
+      - docker_sentinel_dist:/usr/share/nginx/html/sentinel:ro
+      - certbot_certs:/etc/letsencrypt:ro
+      - certbot_www:/var/www/certbot:ro
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+volumes:
+  portfolio_dist:
+    external: true
+    name: portfolio_dist
+  docker_sentinel_dist:
+    external: true
+    name: docker_sentinel_dist
+  certbot_certs:
+    external: true
+    name: portfolio_certbot_certs
+  certbot_www:
+    external: true
+    name: portfolio_certbot_www
+
+networks:
+  portfolio-network:
+    name: portfolio-network
