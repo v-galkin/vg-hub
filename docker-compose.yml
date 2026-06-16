@@ -8,7 +8,6 @@ services:
       - "443:443"
     volumes:
       - portfolio_dist:/usr/share/nginx/html/portfolio:ro
-      - docker_sentinel_dist:/usr/share/nginx/html/sentinel:ro
       - certbot_certs:/etc/letsencrypt:ro
       - certbot_www:/var/www/certbot:ro
     restart: unless-stopped
@@ -26,11 +25,9 @@ volumes:
   portfolio_dist:
     external: true
     name: portfolio_dist
-  docker_sentinel_dist:
-    external: true
-    name: docker_sentinel_dist
   certbot_certs:
   certbot_www:
 networks:
   portfolio-network:
+    external: true
     name: portfolio-network
